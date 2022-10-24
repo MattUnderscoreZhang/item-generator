@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "item_generator"
+version = "0.1.0"
+description = "Randomly generate magical items and add them to a database."
+authors = ["Matt Zhang <set.stun@gmail.com>"]
+readme = "README.md"
+packages = [{include = "item_generator"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+SQLAlchemy = "^1.4.42"
+alembic = "^1.8.1"
+psycopg2 = "^2.9.4"
+SQLAlchemy-Utils = "^0.38.3"
+sqlalchemy-aurora-data-api = "^0.4.1"
+boto3 = "^1.24.96"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
