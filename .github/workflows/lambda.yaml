@@ -7,13 +7,16 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - name: Checkout
+      - name: Code Checkout
         uses: actions/checkout@v2
-      - name: Create Zip File
-        uses: vimtor/action-zip@v1
+      - name: Setup Python
+        uses: actions/setup-python@v2
         with:
-          files: lambda_function.py item_generator
-          dest: item_generator.zip
+          python-version: 3.8
+      - name: Poetry Install
+        uses: Gr1N/setup-poetry@v7
+      - name: Zip Dependencies
+        run: bash .github/scripts/zip_dependencies.sh
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
