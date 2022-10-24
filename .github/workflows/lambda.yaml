@@ -1,0 +1,23 @@
+name: Push to Lambda
+on: [push]
+jobs:
+  PushToLambda:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Create Zip File
+        uses: vimtor/action-zip@v1
+        with:
+          files: lambda_function.py item_generator
+          dest: item_generator.zip
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          role-to-assume: arn:aws:iam::826647375394:role/GitHubWorkflow_UpdateItemGeneratorLambdaFunction
+          aws-region: us-east-1
+      - name: Push to AWS Lambda
+        run: aws lambda update-function-code --function-name item_generator --zip-file fileb://item_generator.zip
