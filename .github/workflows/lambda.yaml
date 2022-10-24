@@ -16,7 +16,7 @@ jobs:
       - name: Poetry Install
         uses: Gr1N/setup-poetry@v7
       - name: Zip Dependencies
-        run: bash .github/scripts/zip_dependencies.sh
+        run: bash .github/zip_dependencies.sh
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
