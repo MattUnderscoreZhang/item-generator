@@ -1,5 +1,3 @@
-from typing import Any
-
 from item_generator.db_session import get_engine, get_session
 from item_generator.models import Base, Item
 

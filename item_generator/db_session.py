@@ -16,7 +16,6 @@ def get_engine() -> Engine:
             connect_args={
                 "aurora_cluster_arn": aurora_cluster_arn,
                 "secret_arn": secret_arn,
-                "connect_timeout": 30,
             }
         )
     return engine
