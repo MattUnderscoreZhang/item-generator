@@ -17,10 +17,9 @@ def add_random_item() -> str:
     return str(item)
 
 
-def clear_database() -> str:
-    engine = get_engine()
-    Base.metadata.drop_all(engine)
-    return ""
+def delete_items() -> str:
+    n_items_deleted = get_session().query(Item).delete()
+    return f"Deleted {n_items_deleted} items."
 
 
 def get_items() -> list[str]:
