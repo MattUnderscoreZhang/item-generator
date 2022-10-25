@@ -25,7 +25,7 @@ def clear_database() -> str:
 
 def get_items() -> list[str]:
     items = get_session().query(Item).all()
-    return items
+    return [str(item) for item in items]
 
 
 if __name__ == "__main__":
