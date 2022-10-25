@@ -12,8 +12,13 @@ def get_engine() -> Engine:
     secret_arn = f"arn:aws:secretsmanager:{region}:{account_id}:secret:items-generator-rds-credentials-vuEC7H"
 
     engine = create_engine('postgresql+auroradataapi://:@/items',
-                           echo=True,
-                           connect_args=dict(aurora_cluster_arn=aurora_cluster_arn, secret_arn=secret_arn))
+            echo=True,
+            connect_args={
+                "aurora_cluster_arn": aurora_cluster_arn,
+                "secret_arn": secret_arn,
+                "connect_timeout": 30,
+            }
+        )
     return engine
 
 
