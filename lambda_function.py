@@ -18,6 +18,8 @@ def lambda_handler(event, context) -> dict[str, Any]:
         result = db_operations.add_random_item()
     elif function == "clear_database":
         result = db_operations.clear_database()
+    elif function == "get_items":
+        result = db_operations.get_items()
     else:
         result = f"Unknown function: {function}"
     return {

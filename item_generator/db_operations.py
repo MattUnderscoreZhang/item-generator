@@ -23,6 +23,11 @@ def clear_database() -> str:
     return ""
 
 
+def get_items() -> list[str]:
+    items = get_session().query(Item).all()
+    return items
+
+
 if __name__ == "__main__":
     recreate_all_tables()
     while True:
