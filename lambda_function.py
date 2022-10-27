@@ -1,3 +1,4 @@
+import json
 from typing import Any
 
 from item_generator import db_operations
@@ -14,15 +15,21 @@ def lambda_handler(event, context) -> dict[str, Any]:
     Output:
         body: Any - response body
     """
-    function = event["function"]
-    if function == "add_random_item":
-        result = db_operations.add_random_item()
-    elif function == "delete_items":
-        result = db_operations.delete_items()
-    elif function == "get_items":
+    # https://docs.aws.amazon.com/lambda/latest/dg/urls-invocation.html#urls-payloads
+    method = event["requestContext"]["http"]["method"]
+    if method == "GET":
         result = db_operations.get_items()
+    elif method == "POST":
+        function = json.loads(event["body"])["function"]
+        if function == "add_random_item":
+            result = db_operations.add_random_item()
+        elif function == "delete_items":
+            result = db_operations.delete_items()
+        else:
+            result = f"Unknown function: {function}"
     else:
-        result = f"Unknown function: {function}"
+        result = f"Unsupported method: {method}"
+
     return {
         'statusCode': 200,
         'headers': {
