@@ -18,7 +18,9 @@ def add_random_item() -> dict[str, str]:
 
 
 def delete_items() -> str:
-    n_items_deleted = get_session().query(Item).delete()
+    session = get_session()
+    n_items_deleted = session.query(Item).delete()
+    session.commit()
     return f"Deleted {n_items_deleted} items."
 
 
