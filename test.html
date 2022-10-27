@@ -74,14 +74,16 @@
         </script>
     </head>
     <body>
-        <select id="item" onchange="get_items()">
-            <option value="add_random_item">Add Item</option>
-            <option value="delete_items">Delete Items</option>
-        </select>
-        <button id="submit">Submit</button>
-        <br>
-        <div id="waiting" style="display: none;"><br>Waiting...</div>
-        <br>
-        <table align="center" id="table" border="1"></table>
+        <div align="center">
+            <select id="item" onchange="get_items()">
+                <option value="add_random_item">Add Random Item</option>
+                <option value="delete_items">Delete All Items</option>
+            </select>
+            <button id="submit">Submit</button>
+            <br>
+            <div id="waiting" style="display: none;"><br>Waiting...</div>
+            <br>
+            <table id="table" border="1"></table>
+        </div>
     </body>
 </html>
