@@ -17,6 +17,8 @@ def lambda_handler(event, context) -> dict[str, Any]:
     """
     # https://docs.aws.amazon.com/lambda/latest/dg/urls-invocation.html#urls-payloads
     method = event["requestContext"]["http"]["method"]
+    status_code = 200
+
     if method == "GET":
         result = db_operations.get_items()
     elif method == "POST":
@@ -27,17 +29,19 @@ def lambda_handler(event, context) -> dict[str, Any]:
             result = db_operations.delete_items()
         else:
             result = f"Unknown function: {function}"
+            status_code = 400
     else:
         result = f"Unsupported method: {method}"
+        status_code = 400
 
     return {
-        'statusCode': 200,
-        'headers': {
-            'Access-Control-Allow-Headers': '*',
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': '*',
-            'Accept': '*/*',
-            'Content-Type': 'application/json'
-        },
+        'statusCode': status_code,
+        # 'headers': {
+            # 'Access-Control-Allow-Headers': '*',
+            # 'Access-Control-Allow-Origin': '*',
+            # 'Access-Control-Allow-Methods': '*',
+            # 'Accept': '*/*',
+            # 'Content-Type': 'application/json'
+        # },
         'body': result
     }
