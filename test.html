@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Item Generator</title>
+        <script>
+            const url = "https://upnrrhuarwp4t7tce6itub76fy0noest.lambda-url.us-east-1.on.aws/"
+
+            async function get_items() {
+                const params = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        'function': 'get_items'
+                    })
+                };
+                const response = await fetch(url, params);
+                const data = await response.json();
+                docment.getElementById("display").value = data;
+            };
+
+            async function submit_request_and_get_items() {
+                var function_selection = document.getElementById("item").value;
+                const params = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        'function': function_selection
+                    })
+                };
+                await fetch(url, params);
+                await get_items();
+            };
+
+            document.addEventListener('DOMContentLoaded', () => {
+                document.getElementById("submit_request_and_get_items").addEventListener("click", submit_request_and_get_items);
+            });
+        </script>
+    </head>
+    <body>
+        <select id="item" onchange="get_items()">
+            <option value="add_random_item">Add Item</option>
+            <option value="delete_items">Delete Items</option>
+        </select>
+        <button id="submit_request_and_get_items">Submit</button>
+        <br>
+        <textarea id="display" rows="4" cols="50" readonly></textarea>
+    </body>
+</html>
