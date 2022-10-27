@@ -8,12 +8,7 @@ from item_generator import items
 Base = declarative_base()
 
 
-class SerializableBase(Base):
-    def as_dict(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-
-
-class Item(SerializableBase):
+class Item(Base):
     __tablename__ = "item"
 
     id = Column(Integer, primary_key=True)
@@ -23,6 +18,9 @@ class Item(SerializableBase):
 
     def __repr__(self) -> str:
         return f"{self.name}: {self.price} gold\n\t{self.description}"
+
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
     @staticmethod
     def random() -> 'Item':
