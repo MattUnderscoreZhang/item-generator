@@ -8,18 +8,6 @@
         <script>
             const url = "https://zrali44k7b4zk36qurwgxdes3m0gvnqq.lambda-url.us-east-1.on.aws/"
 
-            async function get_items() {
-                const params = {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                };
-                const response = await fetch(url, params);
-                const data = await response.json();
-                docment.getElementById("display").value = data;
-            };
-
             async function submit() {
                 var function_selection = document.getElementById("item").value;
                 const params = {
@@ -44,6 +32,42 @@
                 document.getElementById("submit").disabled = false;
             };
 
+            async function get_items() {
+                const params = {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                };
+                const response = await fetch(url, params);
+                const data = await response.json();
+                 
+                var table = document.getElementById("table")
+                fill_table(table, data);
+            };
+
+            function fill_table(table, data) {
+                // table header
+                const column_names = ['Item Name', 'Price (Gold)', 'Description'];
+                var row = table.insertRow(-1);
+                for (var i = 0; i < column_names.length; i++) {
+                    var headerCell = document.createElement("th");
+                    headerCell.innerHTML = column_names[i];
+                    row.appendChild(headerCell);
+                }
+
+                // table body
+                const columns = ['name', 'price', 'description'];
+                for (var i = 0; i < data.length; i++) {
+                    row = table.insertRow(-1);
+                    for (var j = 0; j < columns.length; j++) {
+                        var column = document.createElement("td");
+                        column.innerHTML = data[i][columns[j]];
+                        row.appendChild(column);
+                    }
+                }
+            }
+
             document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById("submit").addEventListener("click", submit);
             });
@@ -58,6 +82,6 @@
         <br>
         <div id="waiting" style="display: none;"><br>Waiting...</div>
         <br>
-        <textarea id="display" rows="4" cols="50" readonly></textarea>
+        <table align="center" id="table" border="1"></table>
     </body>
 </html>

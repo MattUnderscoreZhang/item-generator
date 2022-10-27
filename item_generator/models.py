@@ -8,7 +8,12 @@ from item_generator import items
 Base = declarative_base()
 
 
-class Item(Base):
+class SerializableBase(Base):
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
+class Item(SerializableBase):
     __tablename__ = "item"
 
     id = Column(Integer, primary_key=True)

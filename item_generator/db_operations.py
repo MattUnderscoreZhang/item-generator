@@ -9,12 +9,12 @@ def recreate_all_tables() -> str:
     return ""
 
 
-def add_random_item() -> str:
+def add_random_item() -> dict[str, str]:
     item = Item.random()
     session = get_session()
     session.add(item)
     session.commit()
-    return str(item)
+    return item.as_dict()
 
 
 def delete_items() -> str:
@@ -22,9 +22,9 @@ def delete_items() -> str:
     return f"Deleted {n_items_deleted} items."
 
 
-def get_items() -> list[str]:
+def get_items() -> list[dict[str, str]]:
     items = get_session().query(Item).all()
-    return [str(item) for item in items]
+    return [item.as_dict() for item in items]
 
 
 if __name__ == "__main__":
