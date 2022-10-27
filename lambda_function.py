@@ -9,7 +9,8 @@ def lambda_handler(event, context) -> dict[str, Any]:
     Input:
         function: str - name of function to call
             "add_random_item": add a random item to the database
-            "clear_database": clear the database
+            "delete_items": delete all items
+            "get_items": get all items
     Output:
         body: Any - response body
     """
